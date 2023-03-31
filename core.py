@@ -224,6 +224,9 @@ def parseDlcs(html):
     return games
 
 def getDlcs(storeUrl):
+    if "app/" not in storeUrl:
+        # edge case: 'https://store.steampowered.com/sub/516201/?snr=1_7_7_151_150_1'
+        return []
     appinfo = storeUrl.split("app/")[1].split("/")
     appid = appinfo[0]
     sanitazedName = appinfo[1]
