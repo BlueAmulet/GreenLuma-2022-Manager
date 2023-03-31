@@ -15,3 +15,4 @@ requests==2.*
 requests-toolbelt==0.*
 soupsieve==2.*
 urllib3==1.*
+cloudscraper==1.2.69
