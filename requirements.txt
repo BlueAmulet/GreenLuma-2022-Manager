@@ -2,6 +2,7 @@ altgraph==0.*
 beautifulsoup4==4.*
 certifi
 chardet==3.*
+cloudscraper==1.2.*
 future==0.*
 idna==2.*
 pefile
@@ -15,4 +16,3 @@ requests==2.*
 requests-toolbelt==0.*
 soupsieve==2.*
 urllib3==1.*
-cloudscraper==1.2.69
