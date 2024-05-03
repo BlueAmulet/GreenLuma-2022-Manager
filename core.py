@@ -15,7 +15,7 @@ from cloudscraper.exceptions import CloudflareException, CaptchaException
 
 BASE_PATH = "{}/GLR_Manager".format(os.getenv("LOCALAPPDATA"))
 PROFILES_PATH = "{}/Profiles".format(BASE_PATH)
-CURRENT_VERSION = "1.3.9"
+CURRENT_VERSION = "1.3.10"
 
 class Game:
     def __init__(self, id, name, type):
@@ -168,7 +168,7 @@ class ConfigNotLoadedException(Exception):
 
 #-------------
 logging.basicConfig(level=logging.DEBUG, format="[%(levelname)s] %(message)s", handlers=[logging.FileHandler("errors.log", mode="w"), logging.StreamHandler()])
-logging.info("GreenLuma 2023 Manager " + CURRENT_VERSION)
+logging.info("GreenLuma 2024 Manager " + CURRENT_VERSION)
 config = Config.load_config()
 query_filter = re.compile("[ \u00a9\u00ae\u2122]")
 

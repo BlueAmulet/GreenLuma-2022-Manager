@@ -45,7 +45,7 @@ class MainWindow(QMainWindow):
         self.setup_greenluma_path()
         self.setup_steam_path()
         if not core.config.manager_msg:
-            self.show_popup("Thank you for using the unofficial Manager for GreenLuma 2023\n\nThis is just a game manager, and requires you to separately download GreenLuma.", self.acknowledge_manager, lambda: core.sys.exit())
+            self.show_popup("Thank you for using the unofficial Manager for GreenLuma 2024\n\nThis is just a game manager, and requires you to separately download GreenLuma.", self.acknowledge_manager, lambda: core.sys.exit())
         self.setup_search_table()
         # self.main_window.main_panel.raise_()
 
