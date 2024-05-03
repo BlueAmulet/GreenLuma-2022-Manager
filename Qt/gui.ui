@@ -607,33 +607,6 @@ font: 75 11pt &quot;Consolas&quot;;</string>
       <bool>false</bool>
      </property>
     </widget>
-    <widget class="QCheckBox" name="compatibility_mode_checkbox">
-     <property name="enabled">
-      <bool>true</bool>
-     </property>
-     <property name="geometry">
-      <rect>
-       <x>755</x>
-       <y>695</y>
-       <width>150</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>10</pointsize>
-      </font>
-     </property>
-     <property name="toolTip">
-      <string>Enable this if you're having problem with AV detection</string>
-     </property>
-     <property name="text">
-      <string>Compatibility Mode</string>
-     </property>
-     <property name="checked">
-      <bool>false</bool>
-     </property>
-    </widget>
     <widget class="QTableView" name="search_result">
      <property name="geometry">
       <rect>
@@ -1026,7 +999,6 @@ color: rgb(6, 11, 8);</string>
     <zorder>profile_selector</zorder>
     <zorder>label_profile</zorder>
     <zorder>remove_game</zorder>
-    <zorder>compatibility_mode_checkbox</zorder>
     <zorder>search_result</zorder>
     <zorder>create_profile</zorder>
     <zorder>label_main</zorder>

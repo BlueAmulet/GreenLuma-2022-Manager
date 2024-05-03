@@ -12,7 +12,6 @@ import fileinput
 
 profile_manager = core.ProfileManager()
 games = []
-default_dll = "GreenLuma_2020_x86.dll"
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -38,7 +37,6 @@ class MainWindow(QMainWindow):
 
         self.main_window.version_label.setText("v{0}".format(core.CURRENT_VERSION))
         self.main_window.no_hook_checkbox.setChecked(core.config.no_hook)
-        self.main_window.compatibility_mode_checkbox.setChecked(core.config.compatibility_mode)
         self.populate_list(self.main_window.games_list, games)
         self.main_window.games_list.dropEvent = self.drop_event_handler
         self.populate_table(self.main_window.search_result)
@@ -219,9 +217,9 @@ class MainWindow(QMainWindow):
 
         with core.get_config() as config:
             config.no_hook = self.main_window.no_hook_checkbox.isChecked()
-            config.compatibility_mode = self.main_window.compatibility_mode_checkbox.isChecked()
 
         # Verify required components of GreenLuma are present
+        core.logging.info("Validating GreenLuma files exist")
         gl_path = core.config.greenluma_path
         for fname in ["DLLInjector.exe", "DLLInjector.ini"]:
             test_path = os.path.join(gl_path, fname)
@@ -242,35 +240,47 @@ class MainWindow(QMainWindow):
                         gl_dll = tokens[1].strip()
                         break
         if gl_dll is None:
-            core.logging.warning(f"Failed to detect Dll from DLLInjector.ini, using default of {default_dll}")
-            gl_dll = default_dll
-        if not os.path.isabs(gl_dll) or not os.path.exists(gl_dll):
-            gl_dll = os.path.basename(gl_dll)
-            if not os.path.exists(os.path.join(gl_path, gl_dll)) and os.path.exists(os.path.join(gl_path, default_dll)):
-                core.logging.warning(f"Correcting Dll from {gl_dll} to {default_dll}")
-                gl_dll = default_dll
-            test_path = os.path.join(gl_path, gl_dll)
-            if not os.path.exists(test_path):
-                core.logging.error(f"{gl_dll} not found at {test_path}")
-                self.show_popup(f"{gl_dll} is missing, please reinstall GreenLuma")
+            core.logging.warning(f"Failed to detect Dll from DLLInjector.ini, attempting to locate Dll")
+        elif gl_dll == "":
+            core.logging.warning(f"No Dll listed in DLLInjector.ini, attempting to locate Dll")
+            gl_dll = None
+        elif os.path.isabs(gl_dll) and os.path.exists(gl_dll) and not os.path.isfile(gl_dll):
+            core.logging.warning(f"Dll listed in DLLInjector.ini is not a file, attempting to locate Dll")
+            gl_dll = None
+        else:
+            gl_base_dll = os.path.basename(gl_dll)
+            if not os.path.isabs(gl_dll) or not os.path.isfile(gl_dll):
+                test_path = os.path.join(gl_path, gl_base_dll)
+                if os.path.exists(test_path):
+                    gl_dll = gl_base_dll
+                else:
+                    core.logging.error(f"{gl_base_dll} not found at {test_path}, attempting to locate proper Dll")
+                    gl_dll = None
+            elif os.path.normcase(gl_dll) == os.path.normcase(os.path.join(gl_path, gl_base_dll)):
+                gl_dll = gl_base_dll
+        if gl_dll is None:
+            # Attempt to locate the Dll
+            for file in os.listdir(gl_path):
+                lfile = file.lower()
+                if lfile.startswith("greenluma_") and lfile.endswith("_x86.dll"):
+                    core.logging.info(f"Found GreenLuma as {file}")
+                    gl_dll = file
+                    break
+            if gl_dll is None:
+                core.logging.error("Could not locate GreenLuma's x86 Dll")
+                self.show_popup(f"GreenLuma's x86 Dll is missing, please reinstall GreenLuma")
                 return
-        elif gl_dll == os.path.join(gl_path, os.path.basename(gl_dll)):
-            gl_dll = os.path.basename(gl_dll)
 
         # Update DLLInjector.ini
+        core.logging.info("Updating DLLInjector.ini")
         try:
             self.replaceConfig("FileToCreate_1", " NoQuestion.bin", True)
-
-            # if : else used instead of ternary operator for better readability
-            if core.config.compatibility_mode or core.config.no_hook:
-                self.replaceConfig("EnableMitigationsOnChildProcess", " 0")
-            else:
-                self.replaceConfig("EnableMitigationsOnChildProcess", " 1")
 
             if core.config.no_hook:
                 self.replaceConfig("CommandLine", "")
                 self.replaceConfig("WaitForProcessTermination", " 0")
                 self.replaceConfig("EnableFakeParentProcess", " 1")
+                self.replaceConfig("EnableMitigationsOnChildProcess", " 0")
                 self.replaceConfig("CreateFiles", " 2")
                 self.replaceConfig("FileToCreate_2", " StealthMode.bin", True)
             else:
@@ -298,6 +308,7 @@ class MainWindow(QMainWindow):
             return
 
         if self.is_steam_running():
+            core.logging.info("Closing Steam")
             self.toggle_widget(self.main_window.closing_steam)
             os.chdir(core.config.steam_path)
             try:

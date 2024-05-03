@@ -115,11 +115,10 @@ class ProfileManager:
         os.remove("{}/{}.json".format(PROFILES_PATH, profile_name))
 
 class Config:
-    def __init__(self, steam_path="", greenluma_path="", no_hook=True, compatibility_mode=True, version=CURRENT_VERSION, last_profile="default", check_update=True, use_steamdb=False, manager_msg=False):
+    def __init__(self, steam_path="", greenluma_path="", no_hook=True, version=CURRENT_VERSION, last_profile="default", check_update=True, use_steamdb=False, manager_msg=False):
         self.steam_path = steam_path
         self.greenluma_path = greenluma_path
         self.no_hook = no_hook
-        self.compatibility_mode = compatibility_mode
         self.version = version
         self.last_profile = last_profile
         self.check_update = check_update
@@ -168,7 +167,7 @@ class ConfigNotLoadedException(Exception):
     pass
 
 #-------------
-logging.basicConfig(filename="errors.log", filemode="w", level=logging.DEBUG)
+logging.basicConfig(level=logging.DEBUG, format="[%(levelname)s] %(message)s", handlers=[logging.FileHandler("errors.log", mode="w"), logging.StreamHandler()])
 logging.info("GreenLuma 2023 Manager " + CURRENT_VERSION)
 config = Config.load_config()
 query_filter = re.compile("[ \u00a9\u00ae\u2122]")
@@ -272,7 +271,7 @@ def queryGames(query):
         else:
             params = {"term": query, "count": 25, "start": 0, "category1": 998}
             response = requests.get("https://store.steampowered.com/search/results", params=params)
-            return parseGames(response.content, query)
+            return parseGames(response.text, query)
     except (ConnectionError, ConnectTimeout, CloudflareException, CaptchaException) as err:
         logging.exception(err)
         return err
