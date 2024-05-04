@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.28803.202
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GL2023 Updater", "GL2020 Updater.csproj", "{8A2401D7-EE59-48EC-A6D8-069EF807C82A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GLMUpdater", "GLMUpdater.csproj", "{8A2401D7-EE59-48EC-A6D8-069EF807C82A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

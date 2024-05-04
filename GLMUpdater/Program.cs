@@ -1,4 +1,4 @@
-﻿namespace GL2023_Updater
+﻿namespace GLMUpdater
 {
 	static class Program
 	{

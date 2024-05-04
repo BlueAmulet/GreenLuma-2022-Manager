@@ -19,9 +19,9 @@ build/*
 __pycache__/
 env/
 
-# GL2020_Updater
-GL2020_Updater/.vs
-GL2020_Updater/bin
-GL2020_Updater/obj
-GL2020_Updater/packages
-GL2020_Updater/*.csproj.user
+# GLMUpdater
+GLMUpdater/.vs
+GLMUpdater/bin
+GLMUpdater/obj
+GLMUpdater/packages
+GLMUpdater/*.csproj.user

@@ -7,7 +7,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Diagnostics;
 
-namespace GL2023_Updater
+namespace GLMUpdater
 {
 	static class Utils
 	{
@@ -15,7 +15,7 @@ namespace GL2023_Updater
 		{
 			using (HttpClient httpClient = new HttpClient())
 			{
-				HttpResponseMessage response = await httpClient.GetAsync("https://github.com/BlueAmulet/GreenLuma-2023-Manager/releases/latest");
+				HttpResponseMessage response = await httpClient.GetAsync("https://github.com/BlueAmulet/GreenLuma-2024-Manager/releases/latest");
 				string[] header = response.RequestMessage.RequestUri.Segments;
 				return header.Last().Substring(1);
 			}

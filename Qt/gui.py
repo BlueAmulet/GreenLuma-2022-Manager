@@ -502,7 +502,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "GreenLuma 2020 Manager"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "GreenLuma 2024 Manager"))
         self.profile_name.setPlaceholderText(_translate("MainWindow", "Profile Name"))
         self.create_profile_btn.setText(_translate("MainWindow", "Create"))
         self.cancel_profile_btn.setText(_translate("MainWindow", "Cancel"))
