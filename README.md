@@ -15,7 +15,7 @@ GreenLuma 2024 (GL2024) is a Steam unlocker made by Steam006 that is used to obt
 
 The full list of features provided by Steam006.
 
-![alt text](https://i.imgur.com/D18pz0f.png)
+![alt text](https://imgur.com/zdCclTP.png)
 
 ## Can I get banned for using GreenLuma 2024?
 There will always be a risk when using GL2024. If you're willing to take that risk, go right on ahead. If not, then don't bother. Especially when that risk means the status of your Steam account.
